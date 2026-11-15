@@ -3,6 +3,7 @@ import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
+import todoRoutes from "./routes/todo.routes";
 import authMiddleware from "./middleware/auth.middleware";
 const app = express();
 app.use(express.json());
@@ -15,12 +16,13 @@ app.get("/api/health", (_req, res) => {
   res.status(200).json({ message: "Hello " });
 });
 
-app.get("/api/auth/profile",authMiddleware,(req,res)=>{
+app.get("/api/auth/profile", authMiddleware, (req, res) => {
   res.status(200).json({
-    success:true,
-    message:"authenticated User",
-    userId:req.userId
-  })
-})
+    success: true,
+    message: "authenticated User",
+    userId: req.userId,
+  });
+});
 app.use("/api/auth", authRoutes);
+app.use("/api/todos", todoRoutes);
 export default app;
