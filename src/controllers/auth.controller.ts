@@ -68,5 +68,10 @@ export const logout = async (req: Request, res: Response) => {
       success: true,
       message: "User loggedout successfully",
     });
-  } catch (err) {}
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
 };
