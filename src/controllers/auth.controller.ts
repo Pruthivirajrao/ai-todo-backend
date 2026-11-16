@@ -25,7 +25,7 @@ export const register = async (req: Request, res: Response) => {
     });
   }
 };
-  
+
 export const login = async (req: Request, res: Response) => {
   try {
     const result = await loginUser(req.body);
@@ -55,4 +55,18 @@ export const login = async (req: Request, res: Response) => {
       message: "Internal server error",
     });
   }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    return res.status(200).json({
+      success: true,
+      message: "User loggedout successfully",
+    });
+  } catch (err) {}
 };
