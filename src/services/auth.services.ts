@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
+import { env } from "../config/env";
 
 interface RegisterUser {
   name: string;
@@ -12,7 +13,7 @@ const registerUser = async (input: RegisterUser) => {
   const { name, email, password } = input;
 
   // generate jwt
-  const jwtSecret = process.env.JWT_SECRET;
+  const jwtSecret = env.JWT_SECRET;
 
   if (!jwtSecret) {
     throw new Error("JWT_SECRET not configured");
@@ -76,7 +77,7 @@ export const loginUser = async (input: { email: string; password: string }) => {
   }
 
   // Check jwt secret
-  const jwtSecret = process.env.JWT_SECRET;
+  const jwtSecret = env.JWT_SECRET;
   if (!jwtSecret) {
     throw new Error("JWT_SECRET not configured");
   }

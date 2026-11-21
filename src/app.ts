@@ -5,7 +5,10 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
 import todoRoutes from "./routes/todo.routes";
 import authMiddleware from "./middleware/auth.middleware";
+import errorMiddleware from "./middleware/error.middleware";
+import helmet from "helmet";
 const app = express();
+app.use(helmet());
 app.use(express.json());
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
@@ -25,4 +28,5 @@ app.get("/api/auth/profile", authMiddleware, (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/todos", todoRoutes);
+app.use(errorMiddleware);
 export default app;

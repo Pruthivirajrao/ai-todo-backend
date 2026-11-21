@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { env } from "../config/env";
 
 declare global {
   namespace Express {
@@ -20,7 +21,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
       });
     }
 
-    const jwtSecret = process.env.JWT_SECRET;
+    const jwtSecret = env.JWT_SECRET;
     if (!jwtSecret) {
       return res.status(500).json({
         success: false,
